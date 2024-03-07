@@ -15,7 +15,11 @@ from rest_framework.views import APIView
 
 from django.contrib.auth.models import User
 
-from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    ListAPIView,
+    RetrieveAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework import permissions
 
 # Create your views here.
@@ -29,7 +33,7 @@ from rest_framework import permissions
 #         snippets = Snippet.objects.all()
 #         serializers = SnippetSerializer(snippets, many=True)
 #         return JsonResponse(serializers.data, safe=False)
-    
+
 #     elif request.method == "POST":
 #         data = JSONParser().parse(request)
 #         serializer = SnippetSerializer(data=data)
@@ -37,7 +41,7 @@ from rest_framework import permissions
 #             serializer.save()
 #             return JsonResponse(serializer.data, status=201)
 #         return JsonResponse(serializer.errors, status=400)
-    
+
 
 # @csrf_exempt
 # def snippet_detail(request, pk):
@@ -82,7 +86,6 @@ from rest_framework import permissions
 #             serializer.save()
 #             return Response(serializer.data, status=status.HTTP_201_CREATED)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
 
 
 # @api_view(['GET', 'PUT', 'DELETE'])
@@ -111,11 +114,11 @@ from rest_framework import permissions
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 class SnippetList(ListAPIView):
     """
     Generic class based view
     """
+
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -124,11 +127,11 @@ class SnippetList(ListAPIView):
         serializer.save(owner=self.request.user)
 
 
-
 class SnippetDetail(RetrieveUpdateDestroyAPIView):
     """
     Generic class based view
     """
+
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -138,6 +141,7 @@ class UserList(ListAPIView):
     """
     User List API view
     """
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -146,5 +150,6 @@ class UserDetail(RetrieveAPIView):
     """
     User detail API view
     """
+
     queryset = User.objects.all()
     serializer_class = UserSerializer

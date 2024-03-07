@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # class SnippetSerializer(serializers.Serializer):
 #     """
-#     Serializer class 
+#     Serializer class
 #     """
 
 #     id = serializers.IntegerField(read_only=True)
@@ -20,7 +20,7 @@ from django.contrib.auth.models import User
 #         Create and return a new Snippet instance after validating the data
 #         """
 #         return Snippet.objects.create(**validated_data)
-    
+
 #     def update(self, instance, validated_data):
 #         """
 #         Update and return an existing Snippet instance if the data is valid
@@ -34,29 +34,36 @@ from django.contrib.auth.models import User
 #         instance.save()
 #         return instance
 
+
 class SnippetSerializer(serializers.ModelSerializer):
     """
     Model serializer class
     """
-    owner = serializers.ReadOnlyField(source='owner.username')
+
+    owner = serializers.ReadOnlyField(source="owner.username")
 
     class Meta:
         """
         Meta class
         """
+
         model = Snippet
-        fields = ['id', 'title', 'code', 'linenos', 'language', 'style', 'owner']
+        fields = ["id", "title", "code", "linenos", "language", "style", "owner"]
 
 
 class UserSerializer(serializers.ModelSerializer):
     """
     User serializer
     """
-    snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())
+
+    snippets = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Snippet.objects.all()
+    )
 
     class Meta:
         """
         Meta class
         """
+
         model = User
         fields = ["id", "username", "snippets"]
